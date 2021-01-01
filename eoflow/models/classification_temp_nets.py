@@ -304,7 +304,6 @@ class TransformerEncoder(BaseClassificationModel):
             self.dense,
             tf.keras.layers.MaxPool1D(pool_size=seq_len),
             tf.keras.layers.Lambda(lambda x: tf.keras.backend.squeeze(x, axis=-2), name='squeeze'),
-            tf.keras.layers.Softmax()
             tf.keras.layers.Activation(activation=self.config.out_activation)
         ])
         # Build the model, so we can print the summary
