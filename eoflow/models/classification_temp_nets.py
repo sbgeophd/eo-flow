@@ -42,7 +42,7 @@ class TCNModel(BaseClassificationModel):
         use_batch_norm = fields.Bool(missing=False, description='Whether to use batch normalisation.')
         use_layer_norm = fields.Bool(missing=False, description='Whether to use layer normalisation.')
 
-    def build(self, inputs_shape):
+    def build(self, inputs_shape, verbose=True):
         """ Build TCN architecture
 
         The `inputs_shape` argument is a `(N, T, D)` tuple where `N` denotes the number of samples, `T` the number of
@@ -100,7 +100,8 @@ class TCNModel(BaseClassificationModel):
 
         self.net = tf.keras.Model(inputs=x, outputs=net)
 
-        print_summary(self.net)
+        if verbose:
+            print_summary(self.net)
 
     def call(self, inputs, training=None):
         return self.net(inputs, training)
@@ -129,7 +130,7 @@ class TempCNNModel(BaseClassificationModel):
 
         use_batch_norm = fields.Bool(missing=False, description='Whether to use batch normalisation.')
 
-    def build(self, inputs_shape):
+    def build(self, inputs_shape, verbose=True):
         """ Build TCN architecture
 
         The `inputs_shape` argument is a `(N, T, D)` tuple where `N` denotes the number of samples, `T` the number of
@@ -175,7 +176,8 @@ class TempCNNModel(BaseClassificationModel):
 
         self.net = tf.keras.Model(inputs=x, outputs=net)
 
-        print_summary(self.net)
+        if verbose:
+            print_summary(self.net)
 
     def call(self, inputs, training=None):
         return self.net(inputs, training)
@@ -250,10 +252,11 @@ class BiRNN(BaseClassificationModel):
 
         self.net = tf.keras.Sequential(layers)
 
-    def build(self, inputs_shape):
+    def build(self, inputs_shape, verbose=True):
         self.net.build(inputs_shape)
 
-        print_summary(self.net)
+        if verbose:
+            print_summary(self.net)
 
     def call(self, inputs, training=None):
         return self.net(inputs, training)
@@ -291,7 +294,7 @@ class TransformerEncoder(BaseClassificationModel):
         self.dense = tf.keras.layers.Dense(units=self.config.n_classes,
                                            activation=self.config.activation)
 
-    def build(self, inputs_shape):
+    def build(self, inputs_shape, verbose=True):
         """ Build Transformer encoder architecture
 
         The `inputs_shape` argument is a `(N, T, D)` tuple where `N` denotes the number of samples, `T` the number of
@@ -309,7 +312,8 @@ class TransformerEncoder(BaseClassificationModel):
         # Build the model, so we can print the summary
         self.net.build(inputs_shape)
 
-        print_summary(self.net)
+        if verbose:
+            print_summary(self.net)
 
     def call(self, inputs, training=None, mask=None):
         return self.net(inputs, training, mask)
