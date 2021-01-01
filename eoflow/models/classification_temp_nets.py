@@ -276,6 +276,7 @@ class TransformerEncoder(BaseClassificationModel):
         layer_norm = fields.Bool(missing=True, description='Whether to apply layer normalization in the encoder.')
 
         activation = fields.Str(missing='linear', description='Activation function used in final dense filters.')
+        out_activation = fields.Str(missing='softmax', description='Activation function used in output layer.')
 
     def init_model(self):
 
@@ -304,6 +305,7 @@ class TransformerEncoder(BaseClassificationModel):
             tf.keras.layers.MaxPool1D(pool_size=seq_len),
             tf.keras.layers.Lambda(lambda x: tf.keras.backend.squeeze(x, axis=-2), name='squeeze'),
             tf.keras.layers.Softmax()
+            tf.keras.layers.Activation(activation=self.config.out_activation")
         ])
         # Build the model, so we can print the summary
         self.net.build(inputs_shape)
