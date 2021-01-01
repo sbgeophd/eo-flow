@@ -17,7 +17,10 @@ logging.basicConfig(level=logging.INFO,
 # Available losses. Add keys with new losses here.
 classification_losses = {
     'cross_entropy': CategoricalCrossEntropy,
-    'focal_loss': CategoricalFocalLoss
+    'focal_loss': CategoricalFocalLoss,
+    'binary_crossentropy': tf.keras.losses.BinaryCrossentropy,
+    'mae': tf.keras.losses.MeanAbsoluteError,
+    'mse': tf.keras.losses.MeanSquaredError
 }
 
 
@@ -25,7 +28,9 @@ classification_losses = {
 classification_metrics = {
     'accuracy': tf.keras.metrics.CategoricalAccuracy(name='accuracy'),
     'precision': tf.keras.metrics.Precision,
-    'recall': tf.keras.metrics.Recall
+    'recall': tf.keras.metrics.Recall,
+    'mae': tf.keras.metrics.MeanAbsoluteError,
+    'mse': tf.keras.metrics.MeanSquaredError,
 }
 
 
